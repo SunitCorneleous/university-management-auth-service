@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // for testing
 app.get('/', (req: Request, res: Response) => {
-  res.send('Hello World!');
+  res.send('this is the home route 🏠');
 });
 
 export default app;
