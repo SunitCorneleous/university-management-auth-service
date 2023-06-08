@@ -1,5 +1,5 @@
-import express, { Application, Request, Response } from 'express';
-import usersRoute from './app/modules/users/users.route';
+import express, { Application } from 'express';
+import { UserRoutes } from './app/modules/users/user.route';
 import cors from 'cors';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
 
@@ -12,14 +12,16 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //route
-app.use('/api/v1/users', usersRoute);
+app.use('/api/v1/users', UserRoutes);
+
+// for testing
+app.get('/', (req, res) => {
+  // throw new ApiError(400, 'errorororor');
+
+  res.send('this is home route 🏠');
+});
 
 //middlewares
 app.use(globalErrorHandler);
-
-// for testing
-app.get('/', (req: Request, res: Response) => {
-  res.send('this is the home route 🏠');
-});
 
 export default app;

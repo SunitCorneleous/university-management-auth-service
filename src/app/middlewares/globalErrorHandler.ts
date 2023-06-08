@@ -1,44 +1,38 @@
-import { NextFunction, Request, Response } from 'express';
+import { ErrorRequestHandler } from 'express';
 import { IGenericErrorMessage } from '../../interfaces/error';
 import config from '../../config';
 import handlerValidationError from '../../errors/handlerValidationError';
-import { Error } from 'mongoose';
 import ApiError from '../../errors/ApiError';
 
-const globalErrorHandler = (
-  err: Error.ValidationError,
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   let statusCode = 500;
   let message = 'Something went wrong!';
   let errorMessage: IGenericErrorMessage[] = [];
 
-  if (err?.name === 'ValidationError') {
-    const simplifiedError = handlerValidationError(err);
+  if (error?.name === 'ValidationError') {
+    const simplifiedError = handlerValidationError(error);
 
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
     errorMessage = simplifiedError.errorMessages;
-  } else if (err instanceof ApiError) {
-    statusCode = err?.statusCode;
-    message = err?.message;
-    errorMessage = err?.message
+  } else if (error instanceof ApiError) {
+    statusCode = error?.statusCode;
+    message = error?.message;
+    errorMessage = error?.message
       ? [
           {
             path: '',
-            message: err?.message,
+            message: error?.message,
           },
         ]
       : [];
-  } else if (err instanceof Error) {
-    message = err?.message;
-    errorMessage = err?.message
+  } else if (error instanceof Error) {
+    message = error?.message;
+    errorMessage = error?.message
       ? [
           {
             path: '',
-            message: err?.message,
+            message: error?.message,
           },
         ]
       : [];
@@ -48,7 +42,7 @@ const globalErrorHandler = (
     success: false,
     message,
     errorMessage,
-    stack: config.env !== 'production' ? err?.stack : undefined,
+    stack: config.env !== 'production' ? error?.stack : undefined,
   });
 
   next();
