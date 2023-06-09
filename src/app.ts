@@ -1,4 +1,4 @@
-import express, { Application } from 'express';
+import express, { Application, Request, Response } from 'express';
 import { UserRoutes } from './app/modules/users/user.route';
 import cors from 'cors';
 import globalErrorHandler from './app/middlewares/globalErrorHandler';
@@ -15,9 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/users', UserRoutes);
 
 // for testing
-app.get('/', (req, res) => {
-  // throw new ApiError(400, 'errorororor');
-
+app.get('/', (req: Request, res: Response) => {
   res.send('this is home route 🏠');
 });
 
