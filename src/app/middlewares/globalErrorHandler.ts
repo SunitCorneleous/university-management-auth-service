@@ -6,7 +6,10 @@ import config from '../../config';
 
 import ApiError from '../../errors/ApiError';
 import { errorLogger } from '../../shared/logger';
-import ValidationErrorHandler from '../../errors/validationErrorHandler';
+
+import { ZodError } from 'zod';
+import zodErrorHandler from '../../errors/ZodErrorHandler';
+import validationErrorHandler from '../../errors/ValidationErrorHandler';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   config.env === 'development'
@@ -15,21 +18,26 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
 
   let statusCode = 500;
   let message = 'Something went wrong!';
-  let errorMessage: IGenericErrorMessage[] = [];
+  let errorMessages: IGenericErrorMessage[] = [];
 
   // check if Validation Error
   if (error?.name === 'ValidationError') {
-    const simplifiedError = ValidationErrorHandler(error);
+    const simplifiedError = validationErrorHandler(error);
 
     statusCode = simplifiedError.statusCode;
     message = simplifiedError.message;
-    errorMessage = simplifiedError.errorMessages;
+    errorMessages = simplifiedError.errorMessages;
+  } else if (error instanceof ZodError) {
+    const simplifiedError = zodErrorHandler(error);
+    statusCode = simplifiedError.statusCode;
+    message = simplifiedError.message;
+    errorMessages = simplifiedError.errorMessages;
   }
   // check if the error is an instance of Api Error
   else if (error instanceof ApiError) {
     statusCode = error?.statusCode;
     message = error?.message;
-    errorMessage = error?.message
+    errorMessages = error?.message
       ? [
           {
             path: '',
@@ -41,7 +49,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   // check if the error is an instance of Error
   else if (error instanceof Error) {
     message = error?.message;
-    errorMessage = error?.message
+    errorMessages = error?.message
       ? [
           {
             path: '',
@@ -54,7 +62,7 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   res.status(statusCode).json({
     success: false,
     message,
-    errorMessage,
+    errorMessage: errorMessages,
     stack: config.env !== 'production' ? error?.stack : undefined,
   });
 
