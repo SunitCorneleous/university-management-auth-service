@@ -8,8 +8,8 @@ import ApiError from '../../errors/ApiError';
 import { errorLogger } from '../../shared/logger';
 
 import { ZodError } from 'zod';
-import zodErrorHandler from '../../errors/ZodErrorHandler';
-import validationErrorHandler from '../../errors/ValidationErrorHandler';
+import validationErrorHandler from '../../errors/validationErrorHandler';
+import zodErrorHandler from '../../errors/zodErrorHandler';
 
 const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
   config.env === 'development'
