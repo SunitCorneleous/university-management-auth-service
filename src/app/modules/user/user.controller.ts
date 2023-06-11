@@ -10,20 +10,14 @@ const createUser = catchAsync(
 
     const result = await UserService.createUserToDB(user);
 
-    next();
-
-    /* res.status(200).send({
-      success: true,
-      message: 'User created successfully',
-      data: result,
-    }); */
-
     sendResponse(res, {
       statusCode: httpStatus.OK,
       success: true,
       message: 'User created successfully',
       data: result,
     });
+
+    next();
   }
 );
 
