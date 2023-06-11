@@ -1,13 +1,12 @@
 import config from '../../../config';
 import ApiError from '../../../errors/ApiError';
 
-import { IUser } from './users.interface';
-import { User } from './users.model';
-import { generateUserId } from './users.utils';
+import { IUser } from './user.interface';
+import { User } from './user.model';
+import { generateUserId } from './user.utils';
 
 const createUserToDB = async (user: IUser): Promise<IUser | null> => {
   // auto incremental user id
-
   const id = await generateUserId();
 
   user.id = id;
@@ -26,6 +25,6 @@ const createUserToDB = async (user: IUser): Promise<IUser | null> => {
   return createdUser;
 };
 
-export default {
+export const UserService = {
   createUserToDB,
 };
