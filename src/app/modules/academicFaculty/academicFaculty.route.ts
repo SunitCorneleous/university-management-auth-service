@@ -16,6 +16,7 @@ router.post(
   validateRequest(academicFacultyValidation.createAcademicFacultyZodSchema),
   academicFacultyController.createAcademicFaculty
 );
+router.get('/:id', academicFacultyController.getAcademicFaculty);
 router.get('/', academicFacultyController.getAllAcademicFaculties);
 
 export const academicFacultyRoutes = router;
