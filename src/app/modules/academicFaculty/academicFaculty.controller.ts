@@ -4,6 +4,9 @@ import { IAcademicFaculty } from './academicFaculty.interface';
 import { academicFacultyServices } from './academicFaculty.services';
 import sendResponse from '../../../shared/sendResponse';
 import { Request, Response } from 'express';
+import pick from '../../../shared/pick';
+import { paginationFields } from '../../../constants/pagination';
+import { academicFacultyFilterableFields } from './academicFaculty.constants';
 
 const createAcademicFaculty = catchAsync(
   async (req: Request, res: Response) => {
@@ -40,7 +43,29 @@ const updateAcademicFaculty = catchAsync(
   }
 );
 
+const getAllAcademicFaculties = catchAsync(
+  async (req: Request, res: Response) => {
+    const filters = pick(req.query, academicFacultyFilterableFields);
+
+    const paginationOptions = pick(req.query, paginationFields);
+
+    const result = await academicFacultyServices.getAllFaculties(
+      filters,
+      paginationOptions
+    );
+
+    sendResponse<IAcademicFaculty[]>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Semesters retrieved successfully',
+      meta: result.meta,
+      data: result.data,
+    });
+  }
+);
+
 export const academicFacultyController = {
   createAcademicFaculty,
   updateAcademicFaculty,
+  getAllAcademicFaculties,
 };
