@@ -9,6 +9,18 @@ const createAcademicFacultyToDB = async (
   return result;
 };
 
+const updateAcademicFacultyFromDB = async (
+  id: string,
+  payload: IAcademicFaculty
+): Promise<IAcademicFaculty | null> => {
+  const result = await AcademicFaculty.findByIdAndUpdate(id, payload, {
+    new: true,
+  });
+
+  return result;
+};
+
 export const academicFacultyServices = {
   createAcademicFacultyToDB,
+  updateAcademicFacultyFromDB,
 };

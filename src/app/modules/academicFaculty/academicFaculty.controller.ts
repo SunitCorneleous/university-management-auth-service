@@ -22,6 +22,25 @@ const createAcademicFaculty = catchAsync(
   }
 );
 
+const updateAcademicFaculty = catchAsync(
+  async (req: Request, res: Response) => {
+    const id = req.params.id;
+    const body = req.body;
+
+    const result = await academicFacultyServices.updateAcademicFacultyFromDB(
+      id,
+      body
+    );
+    sendResponse<IAcademicFaculty>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Academic Faculty updated successfully',
+      data: result,
+    });
+  }
+);
+
 export const academicFacultyController = {
   createAcademicFaculty,
+  updateAcademicFaculty,
 };

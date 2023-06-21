@@ -5,6 +5,12 @@ import { academicFacultyValidation } from './academicFaculty.validation';
 
 const router = express.Router();
 
+router.patch(
+  '/:id',
+  validateRequest(academicFacultyValidation.updateAcademicFacultyZodSchema),
+  academicFacultyController.updateAcademicFaculty
+);
+
 router.post(
   '/create-faculty',
   validateRequest(academicFacultyValidation.createAcademicFacultyZodSchema),
