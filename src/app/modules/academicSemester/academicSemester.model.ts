@@ -11,7 +11,10 @@ import {
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 
-const academicSemesterSchema = new Schema<IAcademicSemester>(
+const academicSemesterSchema = new Schema<
+  IAcademicSemester,
+  IAcademicSemesterModel
+>(
   {
     title: {
       type: String,
@@ -19,7 +22,7 @@ const academicSemesterSchema = new Schema<IAcademicSemester>(
       enum: academicSemesterTitles,
     },
     year: {
-      type: Number,
+      type: String,
       required: true,
     },
     code: {
@@ -40,6 +43,9 @@ const academicSemesterSchema = new Schema<IAcademicSemester>(
   },
   {
     timestamps: true,
+    toJSON: {
+      virtuals: true,
+    },
   }
 );
 
