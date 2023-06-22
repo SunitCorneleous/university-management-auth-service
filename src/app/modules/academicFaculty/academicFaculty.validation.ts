@@ -7,6 +7,7 @@ const createAcademicFacultyZodSchema = z.object({
     }),
   }),
 });
+
 const updateAcademicFacultyZodSchema = z.object({
   body: z.object({
     title: z.string({

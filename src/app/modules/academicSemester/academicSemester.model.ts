@@ -11,7 +11,10 @@ import {
 import ApiError from '../../../errors/ApiError';
 import httpStatus from 'http-status';
 
-const academicSemesterSchema = new Schema<IAcademicSemester>(
+const academicSemesterSchema = new Schema<
+  IAcademicSemester,
+  IAcademicSemesterModel
+>(
   {
     title: {
       type: String,
