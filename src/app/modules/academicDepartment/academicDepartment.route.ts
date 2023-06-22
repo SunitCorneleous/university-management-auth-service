@@ -5,6 +5,8 @@ import { academicDepartmentController } from './academicDepartment.controller';
 
 const router = express.Router();
 
+router.get('/', academicDepartmentController.getAllAcademicDepartments);
+
 router.post(
   '/create-department',
   validateRequest(
