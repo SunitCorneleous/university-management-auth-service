@@ -7,6 +7,8 @@ const router = express.Router();
 
 router.get('/', academicDepartmentController.getAllAcademicDepartments);
 
+router.get('/:id', academicDepartmentController.getAcademicDepartment);
+
 router.post(
   '/create-department',
   validateRequest(
