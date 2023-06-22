@@ -77,10 +77,25 @@ const updateAcademicDepartment = catchAsync(
     });
   }
 );
+const deleteAcademicDepartment = catchAsync(
+  async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    const result = await academicDepartmentServices.deleteDepartmentFromDB(id);
+
+    sendResponse<IAcademicDepartment>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'Academic Department deleted successfully',
+      data: result,
+    });
+  }
+);
 
 export const academicDepartmentController = {
   createAcademicDepartment,
   getAllAcademicDepartments,
   getAcademicDepartment,
   updateAcademicDepartment,
+  deleteAcademicDepartment,
 };
