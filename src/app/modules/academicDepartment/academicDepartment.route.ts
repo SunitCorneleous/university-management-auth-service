@@ -17,4 +17,12 @@ router.post(
   academicDepartmentController.createAcademicDepartment
 );
 
+router.patch(
+  '/update-department/:id',
+  validateRequest(
+    academicDepartmentValidation.updateAcademicDepartmentZodSchema
+  ),
+  academicDepartmentController.updateAcademicDepartment
+);
+
 export const academicDepartmentRoutes = router;
