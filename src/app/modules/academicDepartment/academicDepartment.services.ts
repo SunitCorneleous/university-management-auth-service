@@ -12,7 +12,9 @@ import { AcademicDepartment } from './academicDepartment.model';
 const createAcademicDepartmentToDB = async (
   data: string
 ): Promise<IAcademicDepartment> => {
-  const result = await AcademicDepartment.create(data);
+  const result = (await AcademicDepartment.create(data)).populate(
+    'academicFaculty'
+  );
 
   return result;
 };
@@ -77,7 +79,9 @@ const getAllDepartments = async (
 const getSingleDepartmentFromDB = async (
   id: string
 ): Promise<IAcademicDepartment | null> => {
-  const result = await AcademicDepartment.findById(id);
+  const result = await AcademicDepartment.findById(id).populate(
+    'academicFaculty'
+  );
 
   return result;
 };
@@ -88,7 +92,7 @@ const updateAcademicDepartmentFromDB = async (
 ): Promise<IAcademicDepartment | null> => {
   const result = await AcademicDepartment.findByIdAndUpdate(id, payload, {
     new: true,
-  });
+  }).populate('academicFaculty');
 
   return result;
 };
