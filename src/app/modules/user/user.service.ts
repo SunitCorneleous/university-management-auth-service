@@ -3,11 +3,16 @@ import ApiError from '../../../errors/ApiError';
 
 import { IUser } from './user.interface';
 import { User } from './user.model';
-import { generateUserId } from './user.utils';
+import { generateStudentId } from './user.utils';
 
 const createUserToDB = async (user: IUser): Promise<IUser | null> => {
+  const academicSemester = {
+    year: '2023',
+    code: '03',
+  };
+
   // auto incremental user id
-  const id = await generateUserId();
+  const id = await generateStudentId(academicSemester);
 
   user.id = id;
 

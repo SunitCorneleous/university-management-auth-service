@@ -14,6 +14,23 @@ export type IBloodGroup =
   | 'O+'
   | 'O-';
 
+type Guardian = {
+  fatherName: string;
+  fatherOccupation: string;
+  fatherContactNo: string;
+  motherName: string;
+  motherOccupation: string;
+  motherContactNo: string;
+  address: string;
+};
+
+type LocalGuardian = {
+  name: string;
+  occupation: string;
+  contactNo: string;
+  address: string;
+};
+
 export type IStudent = {
   id: string;
   name: {
@@ -28,25 +45,13 @@ export type IStudent = {
   emergencyContactNo: string;
   presentAddress: string;
   permanentAddress: string;
-  bloodGroup: IBloodGroup;
-  guardian: {
-    fatherName: string;
-    fatherOccupation: string;
-    fatherContactNo: string;
-    motherName: string;
-    motherOccupation: string;
-    motherContactNo: string;
-    address: string;
-  };
-  localGuardian: {
-    name: string;
-    occupation: string;
-    contactNo: string;
-    address: string;
-  };
+  bloodGroup?: IBloodGroup;
+  guardian: Guardian;
+  localGuardian: LocalGuardian;
   academicSemester: Types.ObjectId | IAcademicSemester;
   academicDepartment: Types.ObjectId | IAcademicDepartment;
   academicFaculty: Types.ObjectId | IAcademicFaculty;
+  profileImage?: string;
 };
 
 export type IStudentModel = Model<IStudent, object>;
