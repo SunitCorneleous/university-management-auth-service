@@ -8,6 +8,7 @@ import { User } from './user.model';
 import { generateStudentId } from './user.utils';
 import { Student } from '../student/student.model';
 import httpStatus from 'http-status';
+import { IAcademicSemester } from '../academicSemester/academicSemester.interface';
 
 const createStudent = async (
   student: IStudent,
@@ -32,7 +33,7 @@ const createStudent = async (
   try {
     session.startTransaction(); // start transaction
 
-    const id = await generateStudentId(academicSemester);
+    const id = await generateStudentId(academicSemester as IAcademicSemester);
     user.id = id;
     student.id = id;
 

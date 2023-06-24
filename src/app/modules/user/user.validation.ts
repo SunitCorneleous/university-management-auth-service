@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { studentBloodGroup } from '../student/student.constants';
+import { studentBloodGroup, studentGender } from '../student/student.constants';
 
 const createUserZodSchema = z.object({
   body: z.object({
@@ -15,7 +15,9 @@ const createUserZodSchema = z.object({
           .string({ required_error: 'Last Name is required' })
           .optional(),
       }),
-      gender: z.string({ required_error: 'Gender is required' }),
+      gender: z.enum([...studentGender] as [string, ...string[]], {
+        required_error: 'Gender is required',
+      }),
       dateOfBirth: z.string({ required_error: 'Birth Date is required' }),
       email: z.string({ required_error: 'Email Date is required' }),
       contactNo: z.string({ required_error: 'Contact No is required' }),
@@ -60,9 +62,15 @@ const createUserZodSchema = z.object({
           required_error: 'Local Guardian Address is required',
         }),
       }),
-      academicSemester: z.string(),
-      academicDepartment: z.string(),
-      academicFaculty: z.string(),
+      academicSemester: z.string({
+        required_error: 'Academic semester is required',
+      }),
+      academicDepartment: z.string({
+        required_error: 'Academic department is required',
+      }),
+      academicFaculty: z.string({
+        required_error: 'Academic faculty is required',
+      }),
       profileImage: z.string().optional(),
     }),
   }),
