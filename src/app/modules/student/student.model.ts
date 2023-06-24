@@ -1,4 +1,4 @@
-import { Schema, Types, model } from 'mongoose';
+import { Schema, model } from 'mongoose';
 import { IStudent, IStudentModel } from './student.interface';
 import { studentBloodGroup, studentGender } from './student.constants';
 
@@ -41,17 +41,17 @@ const studentSchema = new Schema<IStudent, IStudentModel>(
       address: { type: String, required: true },
     },
     academicSemester: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'AcademicSemester',
       required: true,
     },
     academicDepartment: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'AcademicDepartment',
       required: true,
     },
     academicFaculty: {
-      type: Types.ObjectId,
+      type: Schema.Types.ObjectId,
       ref: 'AcademicFaculty',
       required: true,
     },
