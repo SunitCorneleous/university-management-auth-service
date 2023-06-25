@@ -20,5 +20,10 @@ router.post(
 );
 
 // create admin route
+router.post(
+  '/create-admin',
+  validateRequest(UserValidation.createAdminZodSchema),
+  UserController.createAdmin
+);
 
 export const UserRoutes = router;
