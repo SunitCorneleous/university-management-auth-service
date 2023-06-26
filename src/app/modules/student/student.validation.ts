@@ -3,11 +3,13 @@ import { studentBloodGroup, studentGender } from './student.constants';
 
 const updateStudentZodSchema = z.object({
   body: z.object({
-    name: z.object({
-      firstName: z.string().optional(),
-      lastName: z.string().optional(),
-      middleName: z.string().optional(),
-    }),
+    name: z
+      .object({
+        firstName: z.string().optional(),
+        lastName: z.string().optional(),
+        middleName: z.string().optional(),
+      })
+      .optional(),
     gender: z.enum([...studentGender] as [string, ...string[]]).optional(),
     dateOfBirth: z.string().optional(),
     email: z.string().email().optional(),
