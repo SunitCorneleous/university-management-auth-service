@@ -45,8 +45,10 @@ const updateAcademicFaculty = catchAsync(
 
 const getAllAcademicFaculties = catchAsync(
   async (req: Request, res: Response) => {
-    const filters = pick(req.query, academicFacultyFilterableFields);
+    console.log({ 'access-token': req.headers.authorization });
+    console.log({ user: req.user });
 
+    const filters = pick(req.query, academicFacultyFilterableFields);
     const paginationOptions = pick(req.query, paginationFields);
 
     const result = await academicFacultyServices.getAllFaculties(
