@@ -13,3 +13,8 @@ export type IUserJwtToken = {
   userId: string;
   role: string;
 };
+
+export type IChangePassword = {
+  oldPassword: string;
+  newPassword: string;
+};
