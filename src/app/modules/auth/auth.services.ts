@@ -61,9 +61,9 @@ const loginUser = async (payload: ILoginUser): Promise<ILoginUserResponse> => {
   };
 };
 
-let verifiedToken: IUserJwtToken;
-
 const refreshToken = async (token: string) => {
+  let verifiedToken: IUserJwtToken;
+
   // user instance
   const user = new User();
 
